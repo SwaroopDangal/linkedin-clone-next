@@ -2,6 +2,8 @@ import Image from "next/image";
 import React from "react";
 import SearchInput from "./SearchInput";
 import NavItems from "./NavItems";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import { Button } from "./ui/button";
 
 const Navbar = () => {
   return (
@@ -16,6 +18,18 @@ const Navbar = () => {
         <div className="flex items-center gap-5">
           <div className="md:block hidden">
             <NavItems />
+          </div>
+          <div>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+            <SignedOut>
+              <SignInButton mode="modal">
+                <Button asChild className="rounded-full" variant="secondary">
+                  <span>Sign In</span>
+                </Button>
+              </SignInButton>
+            </SignedOut>
           </div>
         </div>
       </div>
