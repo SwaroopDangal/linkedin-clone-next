@@ -3,7 +3,6 @@ import React from "react";
 import ProfilePhoto from "./shared/ProfilePhoto";
 
 const Sidebar = async ({ user }: { user: any }) => {
-    console.log(user)
   return (
     <div className="hidden md:block w-[20%] h-fit border bordergray-300 bg-white rounded-lg">
       <div className="flex relative flex-col items-center">

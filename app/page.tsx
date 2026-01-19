@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Sidebar from "./components/Sidebar";
-import Feed from "./components/Feed";
-import News from "./components/News";
+import Sidebar from "../components/Sidebar";
+import Feed from "../components/Feed";
+import News from "../components/News";
 import { currentUser } from "@clerk/nextjs/server";
 
 export default async function Home() {
@@ -10,7 +10,7 @@ export default async function Home() {
     <div className="pt-20">
       <div className="max-w-6xl mx-auto flex justify-between gap-8">
         <Sidebar user={user} />
-        <Feed />
+        <Feed user={user} />
         <News />
       </div>
     </div>
