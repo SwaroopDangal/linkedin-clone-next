@@ -11,8 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+
 import { Textarea } from "./ui/textarea";
 import { Images } from "lucide-react";
 import { readFileAsDataUrl } from "@/lib/utils";
@@ -43,7 +42,7 @@ export default function PostDialog({
     setInputText(e.target.value);
   };
   return (
-    <Dialog open={open}>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
         className="sm:max-w-md"
         onInteractOutside={() => setOpen(false)}
@@ -52,7 +51,7 @@ export default function PostDialog({
           <DialogTitle className="flex gap-2">
             <ProfilePhoto src={src} />
             <div>
-              <h1>Patel Mern Stack</h1>
+              <h1>Swaroop Dangal</h1>
               <p className="text-xs">Post to anyone</p>
             </div>
           </DialogTitle>
