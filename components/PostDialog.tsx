@@ -16,6 +16,7 @@ import { Textarea } from "./ui/textarea";
 import { Images } from "lucide-react";
 import { readFileAsDataUrl } from "@/lib/utils";
 import Image from "next/image";
+import { createPostAction } from "@/lib/serveractions";
 
 export default function PostDialog({
   setOpen,
@@ -41,6 +42,16 @@ export default function PostDialog({
   const changeHandler = (e: any) => {
     setInputText(e.target.value);
   };
+
+  const postActionHandler = async (formData: FormData) => {
+    const inputText = formData.get("inputText") as string;
+    try {
+      await createPostAction(inputText, selectedFile);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
@@ -56,7 +67,7 @@ export default function PostDialog({
             </div>
           </DialogTitle>
         </DialogHeader>
-        <form action={""}>
+        <form action={postActionHandler}>
           <div className="flex flex-col">
             <Textarea
               id="name"
