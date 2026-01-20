@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { useFormStatus } from "react-dom";
 import ProfilePhoto from "./shared/ProfilePhoto";
 import { Button } from "./ui/button";
 import {
@@ -13,10 +14,27 @@ import {
 } from "./ui/dialog";
 
 import { Textarea } from "./ui/textarea";
-import { Images } from "lucide-react";
+import { Images, Loader2 } from "lucide-react";
 import { readFileAsDataUrl } from "@/lib/utils";
 import Image from "next/image";
 import { createPostAction } from "@/lib/serveractions";
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button type="submit" disabled={pending}>
+      {pending ? (
+        <>
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          Posting...
+        </>
+      ) : (
+        "Post"
+      )}
+    </Button>
+  );
+}
 
 export default function PostDialog({
   setOpen,
@@ -47,11 +65,12 @@ export default function PostDialog({
     const inputText = formData.get("inputText") as string;
     try {
       await createPostAction(inputText, selectedFile);
+      setInputText("");
+      setSelectedFile("");
+      setOpen(false);
     } catch (error) {
       console.log(error);
     }
-    setInputText("");
-    setOpen(false);
   };
 
   return (
@@ -100,7 +119,7 @@ export default function PostDialog({
                 accept="image/*"
                 onChange={fileChangeHandler}
               />
-              <Button type="submit">Post</Button>
+              <SubmitButton />
             </div>
           </DialogFooter>
         </form>
