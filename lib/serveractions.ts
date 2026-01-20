@@ -49,3 +49,13 @@ export const createPostAction = async (
     throw new Error("Error creating post");
   }
 };
+
+export const getAllPosts = async () => {
+  await connectDB();
+  try {
+    const posts = await Post.find().sort({ createdAt: -1 });
+    return posts;
+  } catch (error) {
+    console.log(error);
+  }
+};
