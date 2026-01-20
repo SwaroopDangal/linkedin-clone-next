@@ -50,6 +50,8 @@ export default function PostDialog({
     } catch (error) {
       console.log(error);
     }
+    setInputText("");
+    setOpen(false);
   };
 
   return (
