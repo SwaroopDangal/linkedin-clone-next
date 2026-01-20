@@ -8,7 +8,9 @@ import { Badge } from "./ui/badge";
 import { IPostDocument } from "@/models/post.model";
 import PostContent from "./PostContent";
 import SocialOptions from "./SocialOptions";
-import ReactTimeago from "react-timeago";
+import dynamic from "next/dynamic";
+
+const ClientTimeAgo = dynamic(() => import("./ClientTimeAgo"), { ssr: false });
 
 const Post = ({ post }: { post: IPostDocument }) => {
   const { user } = useUser();
@@ -32,7 +34,7 @@ const Post = ({ post }: { post: IPostDocument }) => {
             </p>
 
             <p className="text-xs text-gray-500">
-              <ReactTimeago date={new Date(post.createdAt)} />
+              <ClientTimeAgo date={new Date(post.createdAt)} />
             </p>
           </div>
         </div>
