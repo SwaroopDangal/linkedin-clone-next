@@ -5,6 +5,7 @@ import { IUser } from "@/models/user.model";
 import { currentUser } from "@clerk/nextjs/server";
 import { v2 as cloudinary } from "cloudinary";
 import connectDB from "./db";
+import { revalidatePath } from "next/cache";
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -45,6 +46,7 @@ export const createPostAction = async (
         user: userDataBase,
       });
     }
+    revalidatePath("/");
   } catch (error) {
     throw new Error("Error creating post");
   }
@@ -54,7 +56,7 @@ export const getAllPosts = async () => {
   await connectDB();
   try {
     const posts = await Post.find().sort({ createdAt: -1 });
-    return posts;
+    return JSON.parse(JSON.stringify(posts));
   } catch (error) {
     console.log(error);
   }
