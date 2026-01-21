@@ -9,6 +9,7 @@ import { IPostDocument } from "@/models/post.model";
 import PostContent from "./PostContent";
 import SocialOptions from "./SocialOptions";
 import dynamic from "next/dynamic";
+import { deletePostAction } from "@/lib/serveractions";
 
 const ClientTimeAgo = dynamic(() => import("./ClientTimeAgo"), { ssr: false });
 
@@ -41,7 +42,9 @@ const Post = ({ post }: { post: IPostDocument }) => {
         <div>
           {loggedInUser && (
             <Button
-              onClick={() => {}}
+              onClick={() => {
+                const res = deletePostAction(post._id.toString());
+              }}
               size={"icon"}
               className="rounded-full"
               variant={"outline"}
