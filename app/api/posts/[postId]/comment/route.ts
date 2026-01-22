@@ -3,12 +3,13 @@ import { Post } from "@/models/post.model";
 import { NextRequest, NextResponse } from "next/server";
 export const GET = async (
   req: NextRequest,
-  { params }: { params: { postId: string } }
+  context: { params: Promise<{ postId: string }> }
 ) => {
   try {
+    const { postId } = await context.params;
     await connectDB();
 
-    const post = await Post.findById(params.postId).populate({
+    const post = await Post.findById(postId).populate({
       path: "comments",
       options: { sort: { createdAt: -1 } },
     });

@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { MessageCircleMore, Repeat, Send, ThumbsUp } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
+import CommentInput from "./CommentInput";
+import Comments from "./Comments";
 
 const SocialOptions = ({ post }: { post: IPostDocument }) => {
   const [liked, setLiked] = useState(false);
@@ -63,6 +65,14 @@ const SocialOptions = ({ post }: { post: IPostDocument }) => {
             {likes.length} likes
           </p>
         )}
+        {post.comments && post.comments.length > 0 && (
+          <p
+            onClick={() => setCommentOpen(!commentOpen)}
+            className="text-xm text-gray-500 hover:text-blue-500 hover:underline hover:cursor-pointer"
+          >
+            {post.comments.length} message
+          </p>
+        )}
       </div>
       <div className="flex items-center m-1 justify-between">
         <Button
@@ -75,6 +85,7 @@ const SocialOptions = ({ post }: { post: IPostDocument }) => {
         </Button>
         <Button
           variant={"ghost"}
+          onClick={() => setCommentOpen(!commentOpen)}
           className="flex items-center gap-1 rounded-lg text-gray-600 hover:text-black"
         >
           <MessageCircleMore />
@@ -95,6 +106,12 @@ const SocialOptions = ({ post }: { post: IPostDocument }) => {
           <p>Send</p>
         </Button>
       </div>
+      {commentOpen && (
+        <div className="p-4">
+          <CommentInput postId={post._id.toString()} />
+          <Comments post={post} />
+        </div>
+      )}
     </div>
   );
 };
